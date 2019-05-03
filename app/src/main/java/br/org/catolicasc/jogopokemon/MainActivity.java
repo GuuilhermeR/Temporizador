@@ -73,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
                 Button b = (Button) v;
                 String nome = b.getText().toString();
 
-                if(xJgd < 11) {
+
                     if (salvarPkmn.equals(nome)) {
                         int AcertoAtual = Integer.parseInt(TotalAcertos.getText().toString());
                         AcertoAtual += 1;
@@ -118,22 +118,7 @@ public class MainActivity extends AppCompatActivity {
                                 },
                                 2000);
                     }
-                    if(xJgd == 10) {
-                        new android.os.Handler().postDelayed(
-                                new Runnable() {
-                                    public void run() {
-                                        FinalizarJogo();
-                                    }
-                                },
-                        2500);
-                    }
-                    else {
-                        xJgd++;
-                        final DownloadDeDados downloadDeDados = new DownloadDeDados();
-                        downloadDeDados.execute("https://raw.githubusercontent.com/Biuni/PokemonGO-Pokedex/master/pokedex.json");
-                    }
                 }
-            }
         };
         button0.setOnClickListener(listenerButtons);
         button1.setOnClickListener(listenerButtons);
