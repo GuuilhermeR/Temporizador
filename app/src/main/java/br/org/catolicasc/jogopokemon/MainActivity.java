@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
     private AlertDialog.Builder builder;
     private AlertDialog.Builder confirmation;
     private int xJgd;
-    private TextView txvCounter;
+    private TextView Contador;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
         builder = new AlertDialog.Builder(this);
         confirmation = new AlertDialog.Builder(this);
         xJgd = 1;
-        txvCounter = findViewById(R.id.txvCounter);
+        Contador = findViewById(R.id.Contador);
 
         ContadorTempo();
 
@@ -81,11 +81,11 @@ public class MainActivity extends AppCompatActivity {
                         TotalAcertos.setText(String.valueOf(AcertoAtual));
 
                         int ScoreAtual = Integer.parseInt(Score.getText().toString());
-                        ScoreAtual += 100;
+                        ScoreAtual += 3;
                         Score.setText(String.valueOf(ScoreAtual));
 
                         builder.setTitle(nome + " diz:");
-                        builder.setMessage("VOCÊ ACERTOU MEU NOME!!!");
+                        builder.setMessage("Certa resposta!");
                         alerta = builder.create();
                         alerta.show();
 
@@ -103,11 +103,11 @@ public class MainActivity extends AppCompatActivity {
                         TotalErros.setText(String.valueOf(ErroAtual));
 
                         int ScoreAtual = Integer.parseInt(Score.getText().toString());
-                        ScoreAtual -= 100;
+                        ScoreAtual -= 5;
                         Score.setText(String.valueOf(ScoreAtual));
 
                         builder.setTitle("Pokemon diz:");
-                        builder.setMessage("VOCÊ ERROU!!! MEU NOME É: " + salvarPkmn);
+                        builder.setMessage("Resposta errada! Eu sou: " + salvarPkmn);
                         alerta = builder.create();
                         alerta.show();
 
@@ -145,40 +145,14 @@ public class MainActivity extends AppCompatActivity {
     private void ContadorTempo(){
         new CountDownTimer(60000, 1000) {
             public void onTick(long millisecondsUntilDone) {
-                txvCounter.setText(String.valueOf(millisecondsUntilDone / 1000));
+                Contador.setText(String.valueOf(millisecondsUntilDone / 1000));
             }
 
             public void onFinish() {
                 FinalizarJogo();
-                Log.i("Done!", "Coundown Timer Finished");
+               // Log.i("Done!", "Coundown Timer Finished");
             }
         }.start();
-    }
-
-    private void FinalizarJogo(){
-        confirmation.setTitle("O seu tempo acabou.Sua pontuação foi: " + Score.getText().toString())
-        .setMessage("Você deseja recomeçar?")
-        .setPositiveButton("Sim", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int whichButton) {
-                xJgd = 1;
-                Score.setText(" ");
-                TotalAcertos.setText(" ");
-                TotalErros.setText(" ");
-                dialog.cancel();
-                final DownloadDeDados downloadDeDados = new DownloadDeDados();
-                downloadDeDados.execute("https://raw.githubusercontent.com/Biuni/PokemonGO-Pokedex/master/pokedex.json");
-                ContadorTempo();
-                dialog.dismiss();
-            }
-        })
-
-        .setNegativeButton("Não", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                finish();
-                dialog.dismiss();
-            }
-        })
-        .create().show();
     }
 
     private class DownloadDeDados extends AsyncTask<String, Void, String> {
@@ -301,6 +275,32 @@ public class MainActivity extends AppCompatActivity {
             }
             return null;
         }
+    }
+
+    private void FinalizarJogo(){
+        confirmation.setTitle("O seu tempo acabou. Sua pontuação foi: " + Score.getText().toString())
+                .setMessage("Você deseja recomeçar?")
+                .setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        xJgd = 1;
+                        Score.setText(" ");
+                        TotalAcertos.setText(" ");
+                        TotalErros.setText(" ");
+                        dialog.cancel();
+                        final DownloadDeDados downloadDeDados = new DownloadDeDados();
+                        downloadDeDados.execute("https://raw.githubusercontent.com/Biuni/PokemonGO-Pokedex/master/pokedex.json");
+                        ContadorTempo();
+                        dialog.dismiss();
+                    }
+                })
+
+                .setNegativeButton("Não", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        finish();
+                        dialog.dismiss();
+                    }
+                })
+                .create().show();
     }
 
 }

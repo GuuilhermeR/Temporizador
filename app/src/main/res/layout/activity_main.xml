@@ -162,7 +162,7 @@
         app:layout_constraintStart_toEndOf="@+id/txtScore" />
 
     <TextView
-        android:id="@+id/txvCounter"
+        android:id="@+id/Contador"
         android:layout_width="25dp"
         android:layout_height="23dp"
         android:layout_marginStart="8dp"
