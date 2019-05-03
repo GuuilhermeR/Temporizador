@@ -38,7 +38,6 @@ public class MainActivity extends AppCompatActivity {
     private ImageView tvPokemon;
     private TextView TotalAcertos;
     private TextView TotalErros;
-    private TextView tvPontos;
     private String salvarPkmn;
     private AlertDialog alerta;
     private AlertDialog.Builder builder;
@@ -57,7 +56,6 @@ public class MainActivity extends AppCompatActivity {
         button3 = findViewById(R.id.button3);
         TotalAcertos = findViewById(R.id.TotalAcertos);
         TotalErros = findViewById(R.id.TotalErros);
-        tvPontos = findViewById(R.id.tvPontos);
         builder = new AlertDialog.Builder(this);
         confirmation = new AlertDialog.Builder(this);
         Contador = findViewById(R.id.Contador);
@@ -67,21 +65,17 @@ public class MainActivity extends AppCompatActivity {
         final DownloadDeDados downloadDeDados = new DownloadDeDados();
         downloadDeDados.execute("https://raw.githubusercontent.com/Biuni/PokemonGO-Pokedex/master/pokedex.json");
 
-        View.OnClickListener listenerButtons = new View.OnClickListener(){
+        View.OnClickListener listenerButtons = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Button b = (Button) v;
                 String nome = b.getText().toString();
 
-
+                if (xJgd < 11) {
                     if (salvarPkmn.equals(nome)) {
                         int AcertoAtual = Integer.parseInt(TotalAcertos.getText().toString());
                         AcertoAtual += 1;
                         TotalAcertos.setText(String.valueOf(AcertoAtual));
-
-                        int ScoreAtual = Integer.parseInt(tvPontos.getText().toString());
-                        ScoreAtual += 3;
-                        tvPontos.setText(String.valueOf(ScoreAtual));
 
                         builder.setTitle(nome + " diz:");
                         builder.setMessage("Certa resposta!");
@@ -89,21 +83,17 @@ public class MainActivity extends AppCompatActivity {
                         alerta.show();
 
                         new android.os.Handler().postDelayed(
-                        new Runnable() {
-                            public void run() {
-                                alerta.cancel();
-                            }
-                        },
-                        2000);
+                                new Runnable() {
+                                    public void run() {
+                                        alerta.cancel();
+                                    }
+                                },
+                                2000);
 
                     } else {
                         int Erros = Integer.parseInt(TotalErros.getText().toString());
                         Erros += 1;
                         TotalErros.setText(String.valueOf(Erros));
-
-                        int Pontuação = Integer.parseInt(tvPontos.getText().toString());
-                        Pontuação -= 5;
-                        tvPontos.setText(String.valueOf(Pontuação));
 
                         builder.setTitle("Pokemon diz:");
                         builder.setMessage("Resposta errada! Eu sou: " + salvarPkmn);
@@ -119,12 +109,28 @@ public class MainActivity extends AppCompatActivity {
                                 2000);
                     }
                 }
-        };
+                if (xJgd == 10) {
+                    new android.os.Handler().postDelayed(
+                            new Runnable() {
+                                public void run() {
+                                    FinalizarJogo();
+                                }
+                            },
+                            2500);
+                } else {
+                    xJgd++;
+                    final DownloadDeDados downloadDeDados = new DownloadDeDados();
+                    downloadDeDados.execute("https://raw.githubusercontent.com/Biuni/PokemonGO-Pokedex/master/pokedex.json");
+                }
+            }
+            };
+
+
         button0.setOnClickListener(listenerButtons);
         button1.setOnClickListener(listenerButtons);
         button2.setOnClickListener(listenerButtons);
         button3.setOnClickListener(listenerButtons);
-    }
+        }
 
     private void ContadorTempo(){
         new CountDownTimer(60000, 1000) {
@@ -268,7 +274,6 @@ public class MainActivity extends AppCompatActivity {
                 .setPositiveButton("Sim", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
                         xJgd = 1;
-                        tvPontos.setText(" ");
                         TotalAcertos.setText(" ");
                         TotalErros.setText(" ");
                         dialog.cancel();
