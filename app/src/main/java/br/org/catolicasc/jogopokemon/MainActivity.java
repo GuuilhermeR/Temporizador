@@ -31,41 +31,39 @@ import java.util.concurrent.ExecutionException;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
-    private ImageView imageView;
-    private TextView Acertos;
-    private TextView Erros;
+    private Button button0;
+    private Button button1;
+    private Button button2;
+    private Button button3;
+    private ImageView tvPokemon;
+    private TextView TotalAcertos;
+    private TextView TotalErros;
     private TextView Score;
-    private Button btnOption1;
-    private Button btnOption2;
-    private Button btnOption3;
-    private Button btnOption4;
-    private String vGlobal;
+    private String salvarPkmn;
     private AlertDialog alerta;
     private AlertDialog.Builder builder;
     private AlertDialog.Builder confirmation;
-    private int numeroJogadas;
+    private int xJgd;
     private TextView txvCounter;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        imageView = findViewById(R.id.imageView);
-        btnOption1 = findViewById(R.id.btnOption1);
-        btnOption2 = findViewById(R.id.btnOption2);
-        btnOption3 = findViewById(R.id.btnOption3);
-        btnOption4 = findViewById(R.id.btnOption4);
-        Acertos = findViewById(R.id.txtPontosAcertos);
-        Erros = findViewById(R.id.txtPontosErros);
+        tvPokemon = findViewById(R.id.tvPokemon);
+        button0 = findViewById(R.id.button0);
+        button1 = findViewById(R.id.button1);
+        button2 = findViewById(R.id.button2);
+        button3 = findViewById(R.id.button3);
+        TotalAcertos = findViewById(R.id.TotalAcertos);
+        TotalErros = findViewById(R.id.TotalErros);
         Score = findViewById(R.id.txtScoreValue);
         builder = new AlertDialog.Builder(this);
         confirmation = new AlertDialog.Builder(this);
-        numeroJogadas = 1;
+        xJgd = 1;
         txvCounter = findViewById(R.id.txvCounter);
 
-        CallTimer();
+        ContadorTempo();
 
         final DownloadDeDados downloadDeDados = new DownloadDeDados();
         downloadDeDados.execute("https://raw.githubusercontent.com/Biuni/PokemonGO-Pokedex/master/pokedex.json");
@@ -75,11 +73,12 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Button b = (Button) v;
                 String nome = b.getText().toString();
-                if(numeroJogadas < 11) {
-                    if (vGlobal.equals(nome)) {
-                        int AcertoAtual = Integer.parseInt(Acertos.getText().toString());
+
+                if(xJgd < 11) {
+                    if (salvarPkmn.equals(nome)) {
+                        int AcertoAtual = Integer.parseInt(TotalAcertos.getText().toString());
                         AcertoAtual += 1;
-                        Acertos.setText(String.valueOf(AcertoAtual));
+                        TotalAcertos.setText(String.valueOf(AcertoAtual));
 
                         int ScoreAtual = Integer.parseInt(Score.getText().toString());
                         ScoreAtual += 100;
@@ -99,16 +98,16 @@ public class MainActivity extends AppCompatActivity {
                         2000);
 
                     } else {
-                        int ErroAtual = Integer.parseInt(Erros.getText().toString());
+                        int ErroAtual = Integer.parseInt(TotalErros.getText().toString());
                         ErroAtual += 1;
-                        Erros.setText(String.valueOf(ErroAtual));
+                        TotalErros.setText(String.valueOf(ErroAtual));
 
                         int ScoreAtual = Integer.parseInt(Score.getText().toString());
                         ScoreAtual -= 100;
                         Score.setText(String.valueOf(ScoreAtual));
 
                         builder.setTitle("Pokemon diz:");
-                        builder.setMessage("VOCÊ ERROU!!! MEU NOME É: " + vGlobal);
+                        builder.setMessage("VOCÊ ERROU!!! MEU NOME É: " + salvarPkmn);
                         alerta = builder.create();
                         alerta.show();
 
@@ -120,59 +119,58 @@ public class MainActivity extends AppCompatActivity {
                                 },
                                 2000);
                     }
-                    if(numeroJogadas == 10) {
+                    if(xJgd == 10) {
                         new android.os.Handler().postDelayed(
                                 new Runnable() {
                                     public void run() {
-                                        FimDoJogo();
+                                        FinalizarJogo();
                                     }
                                 },
                         2500);
                     }
                     else {
-                        numeroJogadas++;
+                        xJgd++;
                         final DownloadDeDados downloadDeDados = new DownloadDeDados();
                         downloadDeDados.execute("https://raw.githubusercontent.com/Biuni/PokemonGO-Pokedex/master/pokedex.json");
                     }
                 }
             }
         };
-        btnOption1.setOnClickListener(listenerButtons);
-        btnOption2.setOnClickListener(listenerButtons);
-        btnOption3.setOnClickListener(listenerButtons);
-        btnOption4.setOnClickListener(listenerButtons);
+        button0.setOnClickListener(listenerButtons);
+        button1.setOnClickListener(listenerButtons);
+        button2.setOnClickListener(listenerButtons);
+        button3.setOnClickListener(listenerButtons);
     }
 
-    private void CallTimer(){
+    private void ContadorTempo(){
         new CountDownTimer(60000, 1000) {
             public void onTick(long millisecondsUntilDone) {
                 txvCounter.setText(String.valueOf(millisecondsUntilDone / 1000));
             }
 
             public void onFinish() {
-                FimDoJogo();
+                FinalizarJogo();
                 Log.i("Done!", "Coundown Timer Finished");
             }
         }.start();
     }
 
-    private void FimDoJogo(){
-        confirmation.setTitle("FIM DO JOGO!!! Sua pontuação foi: " + Score.getText().toString())
+    private void FinalizarJogo(){
+        confirmation.setTitle("O seu tempo acabou.Sua pontuação foi: " + Score.getText().toString())
         .setMessage("Você deseja recomeçar?")
         .setPositiveButton("Sim", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
-                numeroJogadas = 1;
-                Score.setText("0");
-                Acertos.setText("0");
-                Erros.setText("0");
+                xJgd = 1;
+                Score.setText(" ");
+                TotalAcertos.setText(" ");
+                TotalErros.setText(" ");
                 dialog.cancel();
                 final DownloadDeDados downloadDeDados = new DownloadDeDados();
                 downloadDeDados.execute("https://raw.githubusercontent.com/Biuni/PokemonGO-Pokedex/master/pokedex.json");
-                CallTimer();
+                ContadorTempo();
                 dialog.dismiss();
             }
         })
-
 
         .setNegativeButton("Não", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
@@ -182,8 +180,6 @@ public class MainActivity extends AppCompatActivity {
         })
         .create().show();
     }
-
-
 
     private class DownloadDeDados extends AsyncTask<String, Void, String> {
 
@@ -228,15 +224,15 @@ public class MainActivity extends AppCompatActivity {
 
         private void SetTextInButtons(Random random, JSONArray jsonArray, int[] indice){
             try {
-                btnOption1.setText(jsonArray.getJSONObject(indice[0]).getString("name"));
-                btnOption2.setText(jsonArray.getJSONObject(indice[1]).getString("name"));
-                btnOption3.setText(jsonArray.getJSONObject(indice[2]).getString("name"));
-                btnOption4.setText(jsonArray.getJSONObject(indice[3]).getString("name"));
+                button0.setText(jsonArray.getJSONObject(indice[0]).getString("name"));
+                button1.setText(jsonArray.getJSONObject(indice[1]).getString("name"));
+                button2.setText(jsonArray.getJSONObject(indice[2]).getString("name"));
+                button3.setText(jsonArray.getJSONObject(indice[3]).getString("name"));
                 ImageDownloader imageDownloader = new ImageDownloader();
                 int pokemon = indice[random.nextInt(4)];
-                vGlobal = jsonArray.getJSONObject(pokemon).getString("name");
+                salvarPkmn = jsonArray.getJSONObject(pokemon).getString("name");
                 Bitmap imagem = imageDownloader.execute(jsonArray.getJSONObject(pokemon).getString("img").replace("http", "https")).get();
-                imageView.setImageBitmap(imagem);
+                tvPokemon.setImageBitmap(imagem);
             } catch (JSONException e) {
                 e.printStackTrace();
             }

@@ -4,11 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimary"
     tools:context=".MainActivity">
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/tvPokemon"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="8dp"
@@ -16,20 +15,19 @@
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         android:background="@android:color/darker_gray"
-        app:layout_constraintBottom_toTopOf="@+id/btnOption1"
+        app:layout_constraintBottom_toTopOf="@+id/button0"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtErros"
         app:srcCompat="@android:color/transparent" />
 
     <Button
-        android:id="@+id/btnOption4"
+        android:id="@+id/button3"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
-        android:background="@android:color/black"
         android:fontFamily="casual"
         android:text="Button"
         android:textColor="@android:color/white"
@@ -40,76 +38,57 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/btnOption3"
+        android:id="@+id/button2"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
-        android:background="@android:color/black"
         android:fontFamily="casual"
         android:text="Button"
         android:textColor="@android:color/white"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/btnOption4"
+        app:layout_constraintBottom_toTopOf="@+id/button3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/btnOption2"
+        android:id="@+id/button1"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
-        android:background="@android:color/black"
         android:fontFamily="casual"
         android:text="Button"
         android:textColor="@android:color/white"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/btnOption3"
+        app:layout_constraintBottom_toTopOf="@+id/button2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/btnOption1"
+        android:id="@+id/button0"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
-        android:background="@android:color/black"
         android:fontFamily="casual"
         android:text="Button"
         android:textColor="@android:color/white"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/btnOption2"
+        app:layout_constraintBottom_toTopOf="@+id/button1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
-
-    <TextView
-        android:id="@+id/txtPontuacao"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:text="Pontuação:"
-        android:textAlignment="center"
-        android:textColor="@android:color/white"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/txtAcertos"
-        android:layout_width="59dp"
-        android:layout_height="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginStart="52dp"
         android:layout_marginTop="8dp"
         android:text="Acertos: "
@@ -118,13 +97,13 @@
         android:textSize="14sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtPontuacao" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/txtErros"
-        android:layout_width="43dp"
-        android:layout_height="17dp"
-        android:layout_marginStart="68dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="60dp"
         android:layout_marginTop="4dp"
         android:text="Erros:"
         android:textAlignment="center"
@@ -134,7 +113,7 @@
         app:layout_constraintTop_toBottomOf="@+id/txtAcertos" />
 
     <TextView
-        android:id="@+id/txtPontosAcertos"
+        android:id="@+id/TotalAcertos"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -145,7 +124,7 @@
         app:layout_constraintStart_toEndOf="@+id/txtAcertos" />
 
     <TextView
-        android:id="@+id/txtPontosErros"
+        android:id="@+id/TotalErros"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -157,20 +136,24 @@
 
     <TextView
         android:id="@+id/txtScore"
-        android:layout_width="46dp"
-        android:layout_height="21dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="84dp"
-        android:text="Score:"
+        android:text="Pontuação"
         android:textColor="@android:color/white"
+        android:textSize="12sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtPontuacao" />
+        app:layout_constraintHorizontal_bias="0.438"
+        app:layout_constraintStart_toEndOf="@+id/TotalAcertos"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/txtScoreValue"
         android:layout_width="wrap_content"
-        android:layout_height="21dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
         android:text="0"
         android:textColor="@android:color/white"
@@ -178,30 +161,21 @@
         app:layout_constraintBaseline_toBaselineOf="@+id/txtScore"
         app:layout_constraintStart_toEndOf="@+id/txtScore" />
 
-    <View
-        android:id="@+id/divider"
-        android:layout_width="2dp"
-        android:layout_height="46dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="64dp"
-        android:layout_marginBottom="8dp"
-        android:background="@android:color/white"
-        app:layout_constraintBottom_toTopOf="@+id/imageView"
-        app:layout_constraintEnd_toStartOf="@+id/txtScore"
-        app:layout_constraintTop_toBottomOf="@+id/txtPontuacao"
-        app:layout_constraintVertical_bias="0.75" />
-
     <TextView
         android:id="@+id/txvCounter"
         android:layout_width="25dp"
         android:layout_height="23dp"
-        android:layout_marginStart="12dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
         android:gravity="center"
-        android:text="00"
         android:textColor="@android:color/black"
         android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/txtScore"
-        app:layout_constraintStart_toEndOf="@+id/txtPontuacao" />
+        app:layout_constraintBottom_toTopOf="@+id/tvPokemon"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/txtScoreValue"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.421" />
 
 </android.support.constraint.ConstraintLayout>
