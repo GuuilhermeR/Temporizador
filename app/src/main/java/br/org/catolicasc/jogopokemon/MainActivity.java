@@ -38,12 +38,12 @@ public class MainActivity extends AppCompatActivity {
     private ImageView tvPokemon;
     private TextView TotalAcertos;
     private TextView TotalErros;
-    private TextView Score;
+    private TextView tvPontos;
     private String salvarPkmn;
     private AlertDialog alerta;
     private AlertDialog.Builder builder;
     private AlertDialog.Builder confirmation;
-    private int xJgd;
+    private int xJgd = 1;
     private TextView Contador;
 
     @Override
@@ -57,10 +57,9 @@ public class MainActivity extends AppCompatActivity {
         button3 = findViewById(R.id.button3);
         TotalAcertos = findViewById(R.id.TotalAcertos);
         TotalErros = findViewById(R.id.TotalErros);
-        Score = findViewById(R.id.txtScoreValue);
+        tvPontos = findViewById(R.id.tvPontos);
         builder = new AlertDialog.Builder(this);
         confirmation = new AlertDialog.Builder(this);
-        xJgd = 1;
         Contador = findViewById(R.id.Contador);
 
         ContadorTempo();
@@ -80,9 +79,9 @@ public class MainActivity extends AppCompatActivity {
                         AcertoAtual += 1;
                         TotalAcertos.setText(String.valueOf(AcertoAtual));
 
-                        int ScoreAtual = Integer.parseInt(Score.getText().toString());
+                        int ScoreAtual = Integer.parseInt(tvPontos.getText().toString());
                         ScoreAtual += 3;
-                        Score.setText(String.valueOf(ScoreAtual));
+                        tvPontos.setText(String.valueOf(ScoreAtual));
 
                         builder.setTitle(nome + " diz:");
                         builder.setMessage("Certa resposta!");
@@ -98,13 +97,13 @@ public class MainActivity extends AppCompatActivity {
                         2000);
 
                     } else {
-                        int ErroAtual = Integer.parseInt(TotalErros.getText().toString());
-                        ErroAtual += 1;
-                        TotalErros.setText(String.valueOf(ErroAtual));
+                        int Erros = Integer.parseInt(TotalErros.getText().toString());
+                        Erros += 1;
+                        TotalErros.setText(String.valueOf(Erros));
 
-                        int ScoreAtual = Integer.parseInt(Score.getText().toString());
-                        ScoreAtual -= 5;
-                        Score.setText(String.valueOf(ScoreAtual));
+                        int Pontuação = Integer.parseInt(tvPontos.getText().toString());
+                        Pontuação -= 5;
+                        tvPontos.setText(String.valueOf(Pontuação));
 
                         builder.setTitle("Pokemon diz:");
                         builder.setMessage("Resposta errada! Eu sou: " + salvarPkmn);
@@ -278,12 +277,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void FinalizarJogo(){
-        confirmation.setTitle("O seu tempo acabou. Sua pontuação foi: " + Score.getText().toString())
+        confirmation.setTitle("O seu tempo acabou. "+ " " +"Acertos: " + TotalAcertos.getText().toString()
+                + " " + "Erros: " + TotalErros.getText().toString())
                 .setMessage("Você deseja recomeçar?")
                 .setPositiveButton("Sim", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
                         xJgd = 1;
-                        Score.setText(" ");
+                        tvPontos.setText(" ");
                         TotalAcertos.setText(" ");
                         TotalErros.setText(" ");
                         dialog.cancel();
