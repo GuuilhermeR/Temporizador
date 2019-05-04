@@ -71,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
                 Button b = (Button) v;
                 String nome = b.getText().toString();
 
-                if (xJgd < 11) {
+                if (xJgd < 50) {
                     if (salvarPkmn.equals(nome)) {
                         int AcertoAtual = Integer.parseInt(TotalAcertos.getText().toString());
                         AcertoAtual += 1;
